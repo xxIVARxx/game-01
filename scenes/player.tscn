@@ -9,6 +9,7 @@ radius = 0.391177
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.516272, 0)
+collision_layer = 2
 script = ExtResource("1_tgi1n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -21,7 +22,6 @@ shape = SubResource("CylinderShape3D_wrfwb")
 transform = Transform3D(-0.983685, 0, 0.179901, 0, 1, 0, -0.179901, 0, -0.983685, -0.199022, 0.0212084, -0.0940003)
 
 [node name="Skeleton3D" parent="visuals/Root Scene/RootNode/RedTeam_SwordsMen_Armature" index="0"]
-bones/0/scale = Vector3(1, 1, 1)
 bones/1/rotation = Quaternion(0.0832518, 1.17316e-07, -2.11603e-08, 0.996529)
 bones/2/rotation = Quaternion(-0.030091, -1.3051e-15, -7.17425e-09, 0.999547)
 bones/4/rotation = Quaternion(-0.441265, 0.400232, 0.80209, -0.0418401)
@@ -41,17 +41,13 @@ bones/14/scale = Vector3(1, 1, 1)
 bones/16/rotation = Quaternion(-0.525023, -0.0867071, 0.436677, 0.725359)
 bones/16/scale = Vector3(1, 1, 1)
 bones/18/rotation = Quaternion(0.5, 0.5, -0.5, -0.5)
-bones/18/scale = Vector3(1, 1, 1)
 bones/19/rotation = Quaternion(-9.80632e-09, 6.31914e-08, 0.707107, 0.707107)
-bones/19/scale = Vector3(1, 1, 1)
 bones/21/rotation = Quaternion(0.612372, 0.353554, 0.612372, 0.353553)
 bones/21/scale = Vector3(1, 1, 1)
 bones/22/rotation = Quaternion(-9.80631e-09, -6.31914e-08, -0.707107, 0.707107)
 bones/22/scale = Vector3(1, 1, 1)
 bones/24/rotation = Quaternion(0.999922, 8.41215e-09, -6.71492e-07, -0.012527)
-bones/24/scale = Vector3(1, 1, 1)
 bones/26/rotation = Quaternion(0.999922, -8.41215e-09, 6.71492e-07, -0.012527)
-bones/26/scale = Vector3(1, 1, 1)
 
 [node name="camera_mount" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.36663, 0)
