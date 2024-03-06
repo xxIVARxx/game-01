@@ -6,4 +6,5 @@ const Max_CLIENT = 6
 var server = null
 var client = null
 
+#server address
 var ip_address = "127.0.0.1"
