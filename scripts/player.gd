@@ -40,14 +40,12 @@ func _input(event):
 		visuals.rotate_y(deg_to_rad(event.relative.x*sens_horizental))
 		camera_mount.rotate_x(deg_to_rad(-event.relative.y*sens_vertical))
 
-@rpc("call_local")
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	
 	if Input.is_action_just_pressed("hit"):
 		if animation_player.current_animation != "RedTeam_SwordsMen_Armature|Atack_TwoHandSwordsMen":
-			animation_player.play("RedTeam_SwordsMen_Armature|Atack_TwoHandSwordsMen")
-	
+			hitx.rpc()
 	
 	if Input.is_action_pressed("run"):
 		SPEED = running_speed
@@ -65,17 +63,14 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	visuals.look_at(position + direction)
-	
+
 	if direction:
 		if running:
-			if animation_player.current_animation !="RedTeam_SwordsMen_Armature|Running_TwoHandSwordsMen":
-				animation_player.play("RedTeam_SwordsMen_Armature|Running_TwoHandSwordsMen")
-					
+				runx.rpc()
 					
 				visuals.look_at(position + direction)
 						
@@ -89,6 +84,18 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
+@rpc("call_local")
+func runx():
+	animation_player.play("RedTeam_SwordsMen_Armature|Running_TwoHandSwordsMen")
 
 
+@rpc("call_local")
+func hitx():
+	animation_player.play("RedTeam_SwordsMen_Armature|Atack_TwoHandSwordsMen")
 
+@rpc("call_local")
+func dirx():
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	visuals.look_at(position + direction)
+	dirx.rpc()
