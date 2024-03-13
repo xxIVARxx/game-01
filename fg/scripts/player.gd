@@ -39,18 +39,10 @@ func _input(event):
 		rotate_y(deg_to_rad(-event.relative.x*sens_horizental))
 		visuals.rotate_y(deg_to_rad(event.relative.x*sens_horizental))
 		camera_mount.rotate_x(deg_to_rad(-event.relative.y*sens_vertical))
-	
-	
+
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-	
-	var input_dir = Input.get_vector("left", "right", "forward", "back")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	rpc("remote_set_position", direction)
-
 	if Input.is_action_just_pressed("hit"):
 		if animation_player.current_animation != "RedTeam_SwordsMen_Armature|Atack_TwoHandSwordsMen":
 			hitx.rpc()
@@ -61,26 +53,26 @@ func _physics_process(delta):
 	else:
 		SPEED = walking_speed
 		running = true
+	
+	
+	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
-@rpc("call_local")
-func runx():
-	animation_player.play("RedTeam_SwordsMen_Armature|Running_TwoHandSwordsMen")
+	# Handle jump.
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+	
+	
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	#visuals.look_at(position + direction)
+	dirx.rpc()
 
-
-@rpc("call_local")
-func hitx():
-	animation_player.play("RedTeam_SwordsMen_Armature|Atack_TwoHandSwordsMen")
-
-
-@rpc("any_peer", "call_local")
-func remote_set_position(direction):
-	visuals.look_at(position + direction)
-	#dirx.rpc()
 	if direction:
 		if running:
 				runx.rpc()
+					
 				visuals.look_at(position + direction)
 						
 		velocity.x = direction.x * SPEED
@@ -93,3 +85,20 @@ func remote_set_position(direction):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
+@rpc("call_local")
+func runx():
+	animation_player.play("RedTeam_SwordsMen_Armature|Running_TwoHandSwordsMen")
+
+
+@rpc("call_local")
+func hitx():
+	animation_player.play("RedTeam_SwordsMen_Armature|Atack_TwoHandSwordsMen")
+
+@rpc("call_local")
+func dirx():
+	print(">>debug: dirx")
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	visuals.look_at(position + direction)
+	#dirx.rpc()
+	
