@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://shka0ue48jut"]
+[gd_scene load_steps=6 format=3 uid="uid://shka0ue48jut"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_tgi1n"]
 [ext_resource type="PackedScene" uid="uid://bu0mahdnfwt4b" path="res://third_person_controller_assets-main/models/RedTeam_TwoHandSwordsMen_Unit.fbx" id="2_hvdjk"]
+[ext_resource type="PackedScene" uid="uid://b84h0em4sngmv" path="res://laser.tscn" id="3_mww3q"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wrfwb"]
 height = 3.85038
@@ -59,6 +60,9 @@ bones/22/rotation = Quaternion(-9.80631e-09, -6.31914e-08, -0.707107, 0.707107)
 bones/22/scale = Vector3(1, 1, 1)
 bones/24/rotation = Quaternion(0.999922, 8.41215e-09, -6.71492e-07, -0.012527)
 bones/26/rotation = Quaternion(0.999922, -8.41215e-09, 6.71492e-07, -0.012527)
+
+[node name="laser" parent="visuals/Root Scene/RootNode/RedTeam_SwordsMen_Armature/Skeleton3D/TwoHand_Sword_Iron" index="0" instance=ExtResource("3_mww3q")]
+transform = Transform3D(-0.000455135, 8.87782e-05, 0.000125328, -4.21803e-06, 0.00910997, -0.000685287, -2.61727e-05, -0.00301201, -0.00206899, -0.010897, -0.00492102, 0.0164247)
 
 [node name="camera_mount" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.36663, 0)
