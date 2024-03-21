@@ -8,24 +8,31 @@ extends RayCast3D
 var tween: Tween
 var beam_radius: float = 0.03
 
+var from : Vector3
+var to : Vector3
 
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	if Input.is_action_just_pressed("hit"):
-			activate(3)
-	else:
-		deactivate(1)
 	
+	visible = false
+	if Input.is_action_pressed("laser"):
+		visible = true 
+		activate(3)
+	else:
+		#deactivate(1)
+		visible = false
+
 	
 	var cast_point
 	force_raycast_update()
 	
 	if is_colliding():
 		cast_point = to_local(get_collision_point())
-		
+		from = cast_point 
+
 		beam_mesh.mesh.height = cast_point.y
 		beam_mesh.position.y = cast_point.y/2
 		
@@ -37,6 +44,8 @@ func _process(delta):
 		
 		if particle_amount > 1:
 			beam_particles.amount = particle_amount
+			particle_amount = to
+
 		else:
 			beam_particles.amount = 1
 			

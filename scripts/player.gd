@@ -6,6 +6,7 @@ extends CharacterBody3D
 
 @onready var visuals = $visuals
 @onready var camera = $camera_mount/Camera3D
+@onready var hitbox = $"visuals/Root Scene/RootNode/RedTeam_SwordsMen_Armature/Skeleton3D/TwoHand_Sword_Iron/HitBox"
 
 
 var SPEED = 3.0
@@ -54,6 +55,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("hit"):
 		if animation_player.current_animation != "RedTeam_SwordsMen_Armature|Atack_TwoHandSwordsMen":
 			hitx.rpc()
+			hitbox.monitoring = true
+			
+	else:
+		hitbox.monitoring = false
 	
 	if Input.is_action_pressed("run"):
 		SPEED = running_speed
@@ -93,3 +98,8 @@ func remote_set_position(direction):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
+
+
+func _on_hit_box_area_entered(area):
+	if area.is_in_group("enemy"):
+		print("damage +++")
